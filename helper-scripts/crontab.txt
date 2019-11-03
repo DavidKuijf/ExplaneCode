@@ -2,4 +2,4 @@
 2 0 * * * /root/report.sh >> /var/log/explane_report.log 2>&1
 6 * * * * /sbin/iw dev wlan0 set power_save off 
 @reboot /root/update.sh
-@reboot /root/mega-login.sh
+
