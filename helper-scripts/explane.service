@@ -4,8 +4,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3.7 -u /root/RPIAirplaneDetector/main.py
-WorkingDirectory=/root/RPIAirplaneDetector
+ExecStart=/usr/bin/python3.7 -u /root/ExplaneCode/main.py
+WorkingDirectory=/root/ExplaneCode
 Restart=always
 
 [Install]
