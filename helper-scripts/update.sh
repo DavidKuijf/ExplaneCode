@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASEDIR="/root/RPIAirplaneDetector/helper-scripts"
+BASEDIR="/root/ExplaneCode/helper-scripts"
 
 ######
 # Check for new update script 
@@ -26,12 +26,12 @@ fi
 # check requirements and install new modules if needed
 # restart explane daemon
 ######
-cd ~/RPIAirplaneDetector
+cd ~/ExplaneCode
 #git checkout dev-branch
 git pull
 pip3 install -r requirements.txt -t .
 
-cd ~/RPIAirplaneDetector/flaskapp
+cd ~/ExplaneCode/flaskapp
 pip3 install -r requirements.txt -t .
 
 systemctl daemon-reload  
@@ -128,7 +128,7 @@ then
 elif [ ${DELTA} -ne 0  ]
 then
 	echo "New crontab found"
-	crontab /root/RPIAirplaneDetector/helper-scripts/crontab.txt
+	crontab ${BASEDIR}/crontab.txt
 fi
 rm /tmp/crontab.tmp
 
