@@ -4,8 +4,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3.7 -u /root/RPIAirplaneDetector/flaskapp/app.py
-WorkingDirectory=/root/RPIAirplaneDetector/flaskapp
+ExecStart=/usr/bin/python3.7 -u /root/ExplaneCode/flaskapp/app.py
+WorkingDirectory=/root/ExplaneCode/flaskapp
 Restart=always
 
 [Install]
