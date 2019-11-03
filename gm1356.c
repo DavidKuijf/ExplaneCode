@@ -51,73 +51,19 @@ int main(int argc, char **argv)
     struct hidraw_devinfo info;
     unsigned char epoch[4];
  
-    /* Open the Device with non-blocking reads. In real life,
-       don't use a hard coded path; use libudev instead. */
-    //fd = open("/dev/hidraw1", O_RDWR|O_NONBLOCK);
     fd = open("/dev/hidraw0", O_RDWR);
- 
     if (fd < 0) {
-        perror("Unable to open device");
-        return 1;
+        perror("Unable to open device /dev/hidraw0");
+        fd = open("/dev/hidraw1", O_RDWR);
+        if (fd < 0) {
+            perror("Unable to open device /dev/hidraw1");
+            return 1;
+        }
     }
  
     memset(&rpt_desc, 0x0, sizeof(rpt_desc));
     memset(&info, 0x0, sizeof(info));
     memset(buf, 0x0, sizeof(buf));
- 
-    /* Get Report Descriptor Size */
-    /*
-    res = ioctl(fd, HIDIOCGRDESCSIZE, &desc_size);
-    if (res < 0)
-        perror("HIDIOCGRDESCSIZE");
-    else
-        printf("Report Descriptor Size: %d\n", desc_size);
-    */ 
-    /* Get Report Descriptor */
-    /*
-    rpt_desc.size = desc_size;
-    res = ioctl(fd, HIDIOCGRDESC, &rpt_desc);
-    if (res < 0) {
-        perror("HIDIOCGRDESC");
-    } else {
-        printf("Report Descriptor:\n");
-        for (i = 0; i < rpt_desc.size; i++)
-            printf("%hhx ", rpt_desc.value[i]);
-        puts("\n");
-    }
-    */ 
- 
-    /* Get Raw Name */
-    /*
-    res = ioctl(fd, HIDIOCGRAWNAME(256), buf);
-    if (res < 0)
-        perror("HIDIOCGRAWNAME");
-    else
-        printf("Raw Name: %s\n", buf);
-    */ 
- 
-    /* Get Physical Location */
-    /*
-    res = ioctl(fd, HIDIOCGRAWPHYS(256), buf);
-    if (res < 0)
-        perror("HIDIOCGRAWPHYS");
-    else
-        printf("Raw Phys: %s\n", buf);
-    */ 
- 
-    /* Get Raw Info */
-    /*
-    res = ioctl(fd, HIDIOCGRAWINFO, &info);
-    if (res < 0) {
-        perror("HIDIOCGRAWINFO");
-    } else {
-        printf("Raw Info:\n");
-        printf("\tbustype: %d (%s)\n",
-            info.bustype, bus_str(info.bustype));
-        printf("\tvendor: 0x%04hx\n", info.vendor);
-        printf("\tproduct: 0x%04hx\n", info.product);
-    }
-    */ 
  
     /* Set Feature */
     buf[0] = 0xb3; /* Report Number */
@@ -149,19 +95,8 @@ int main(int argc, char **argv)
         //puts("\n");
     }
 
-/*
-    time(&now);
-    char* c_time_string = ctime(&now);
-    struct tm * p = localtime(&now);
-    char s[1000];
-    strftime(s, 1000, "%d-%m-%Y %H:%M:%S", p);
-    printf("%s, ", s);
-    //printf("Today is : %s", ctime(&now));
-*/
     double noise = buf[0] * 256 + buf[1];
     noise = noise / 10;
-    //printf("noise = %f\n", noise);
-    //printf("gm1356 = %f , ", noise);
     printf(" %f ", noise);
     close(fd);
     return 0;
