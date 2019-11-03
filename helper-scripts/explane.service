@@ -1,0 +1,12 @@
+[Unit]
+Description=Explane
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3.7 -u /root/RPIAirplaneDetector/main.py
+WorkingDirectory=/root/RPIAirplaneDetector
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
