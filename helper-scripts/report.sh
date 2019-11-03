@@ -17,5 +17,3 @@ grep "${YESTERDAY}" /var/log/daemon.log* | gzip > ${LOGFILE}
 /usr/bin/curl localhost:5000 -o /var/www/html/${HTMLDAY}.html
 
 systemctl restart flaskapp
-
-mega-put ${LOGFILE} /
